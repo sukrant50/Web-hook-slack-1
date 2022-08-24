@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@slack/webhook": "^6.1.0",
+    "https-proxy-agent": "^5.0.1"
+  }
+}
