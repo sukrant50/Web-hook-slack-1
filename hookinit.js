@@ -1,5 +1,6 @@
+require('dotenv').config()
 const { IncomingWebhook } = require('@slack/webhook');
-const url = "https://hooks.slack.com/services/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";
+const url = process.env.SLACK_URL;
 const webhook = new IncomingWebhook(url);
 
 // (async () => {
