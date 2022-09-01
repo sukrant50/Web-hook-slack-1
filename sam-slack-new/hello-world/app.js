@@ -1,3 +1,5 @@
+// import hubspotFunc from "./hubspotHandler"
+const hubspot = require('./hubspotHandler')
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
@@ -17,23 +19,27 @@ let response;
 exports.lambdaHandler = async (event, context) => {
   const message = event.body;
   const { IncomingWebhook } = require("@slack/webhook");
-  const url = "";
+  const url = ""
   const webhook = new IncomingWebhook(url);
 
+  const message2 = JSON.parse(message);
+  const fName = message2.fName
+  const lName = message2.lName
+  const email = message2.email
+  const slackID = message2.slackID
+  const action = message2.action;
+  console.log("the values are : ", fName,lName,email,slackID,action)
+
+
+
   try {
-    // const slackResponse = null;
+    const slackMessage = "<@"+slackID+"> /n"+" The user "+fName+" "+lName+" with email "+email+" performed action: "+action;
     console.log("Sending slack message:", message);
     await webhook.send({
-      text: message
+      text: slackMessage
     });
-
-    //   console.log('Message response:', slackResponse);
-    //   if (slackResponse == null){
-    //     webhookTest();
-    //   }
+    
   } catch (e) {
-    // console.log("error")
-    // webhookTest();
     console.error("There was a error with the request", e);
   }
   response = {
@@ -42,6 +48,17 @@ exports.lambdaHandler = async (event, context) => {
       message: "Hello Sukrant This is a test slack/lambda",
     }),
   };
+
+  const properties = {
+    email: email,
+    firstname: fName,
+    lastname: lName,
+    lifecyclestage: action,
+  };
+  
+  
+
+  hubspotFunc(properties);
 
   return response;
 };

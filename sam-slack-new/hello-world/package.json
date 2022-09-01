@@ -7,6 +7,7 @@
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
+    "@hubspot/api-client": "^7.1.2",
     "@slack/webhook": "^6.1.0",
     "axios": ">=0.21.1",
     "dotenv": "^16.0.1"
